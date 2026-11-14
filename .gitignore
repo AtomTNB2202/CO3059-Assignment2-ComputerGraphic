@@ -1,0 +1,17 @@
+/build/
+/out/
+/output/
+/dataset/
+/.venv-coco/
+/.venv-depth/
+__pycache__/
+/.vs/
+/CMakeUserPresets.json
+imgui.ini
+*.user
+/report/*.aux
+/report/*.log
+/report/*.out
+/report/*.toc
+/report/report.tex
+/report/report.pdf

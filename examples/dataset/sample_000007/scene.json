@@ -1,0 +1,211 @@
+{
+  "animation": {
+    "playing": false,
+    "speed": 1.0,
+    "time": 0.0
+  },
+  "background": [
+    0.24687162041664124,
+    0.3500559628009796,
+    0.29761436581611633
+  ],
+  "camera": {
+    "distance": 8.884008407592773,
+    "frontView": false,
+    "moveSpeed": 5.0,
+    "pitch": 23.52532196044922,
+    "target": [
+      0.0,
+      -0.25,
+      0.0
+    ],
+    "yaw": 27.506107330322266
+  },
+  "format": "CGAssignment1",
+  "lightPosition": [
+    2.431337356567383,
+    5.827360153198242,
+    2.049375534057617
+  ],
+  "next_instance_id": 6,
+  "objects": [
+    {
+      "category_id": 1,
+      "category_name": "table",
+      "instance_id": 1,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.4079490602016449,
+          0.22529879212379456,
+          0.08050832897424698
+        ],
+        "mode": 3,
+        "shininess": 60.24948501586914,
+        "texture": "../../../assets/textures/checker.jpg"
+      },
+      "model": "../../../assets/models/tabletop/table.obj",
+      "name": "Table",
+      "position": [
+        0.0,
+        -1.0499999523162842,
+        0.0
+      ],
+      "randomize_transform": false,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 2,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.60992032289505,
+          0.19401298463344574,
+          0.08791795372962952
+        ],
+        "mode": 3,
+        "shininess": 86.9020767211914,
+        "texture": "../../../assets/textures/checker.png"
+      },
+      "model": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup A",
+      "position": [
+        -1.1102490425109863,
+        0.6002130508422852,
+        0.2849199175834656
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        17.299591064453125,
+        0.0
+      ],
+      "scale": [
+        0.7102875709533691,
+        0.7102875709533691,
+        0.7102875709533691
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 3,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.14345866441726685,
+          0.5505314469337463,
+          0.5833805799484253
+        ],
+        "mode": 3,
+        "shininess": 40.630218505859375,
+        "texture": "../../../assets/textures/checker.png"
+      },
+      "model": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup B",
+      "position": [
+        0.24352964758872986,
+        0.5113369226455688,
+        -0.8137842416763306
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        -35.358795166015625,
+        0.0
+      ],
+      "scale": [
+        0.6042287349700928,
+        0.6042287349700928,
+        0.6042287349700928
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 3,
+      "category_name": "book",
+      "instance_id": 4,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.09419774264097214,
+          0.20074689388275146,
+          0.9339315891265869
+        ],
+        "mode": 3,
+        "shininess": 68.09170532226562,
+        "texture": "../../../assets/textures/checker.jpg"
+      },
+      "model": "../../../assets/models/tabletop/book.obj",
+      "name": "Book",
+      "position": [
+        1.191253662109375,
+        0.10333987325429916,
+        0.1875726282596588
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        -37.02106475830078,
+        0.0
+      ],
+      "scale": [
+        0.6555991768836975,
+        0.6555991768836975,
+        0.6555991768836975
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 4,
+      "category_name": "ball",
+      "instance_id": 5,
+      "kind": 2,
+      "material": {
+        "color": [
+          1.0,
+          0.5968526005744934,
+          0.10559432953596115
+        ],
+        "mode": 2,
+        "shininess": 55.35919189453125,
+        "texture": ""
+      },
+      "model": "../../../assets/models/tabletop/ball.obj",
+      "name": "Ball",
+      "position": [
+        -0.19633398950099945,
+        0.4051958918571472,
+        1.1110055446624756
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        17.88123321533203,
+        0.0
+      ],
+      "scale": [
+        0.4001958668231964,
+        0.4001958668231964,
+        0.4001958668231964
+      ],
+      "visible": true
+    }
+  ],
+  "selectedIndex": -1,
+  "showGrid": false,
+  "version": 1
+}

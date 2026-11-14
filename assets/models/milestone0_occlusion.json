@@ -1,0 +1,101 @@
+{
+  "animation": {
+    "playing": false,
+    "speed": 1.0,
+    "time": 0.0
+  },
+  "background": [
+    0.23499999940395355,
+    0.23499999940395355,
+    0.23499999940395355
+  ],
+  "camera": {
+    "distance": 7.0,
+    "frontView": false,
+    "moveSpeed": 5.0,
+    "pitch": 20.0,
+    "target": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "yaw": 28.0
+  },
+  "format": "CGAssignment1",
+  "lightPosition": [
+    4.0,
+    6.0,
+    5.0
+  ],
+  "objects": [
+    {
+      "category_id": 1,
+      "category_name": "pyramid",
+      "kind": 2,
+      "material": {
+        "color": [
+          0.15000000596046448,
+          0.6800000071525574,
+          0.8199999928474426
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "pyramid.obj",
+      "name": "pyramid.obj",
+      "position": [
+        -0.44999998807907104,
+        0.0,
+        -1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 1,
+      "category_name": "pyramid",
+      "kind": 2,
+      "material": {
+        "color": [
+          0.8199999928474426,
+          0.15000005066394806,
+          0.15000005066394806
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "pyramid.obj",
+      "name": "pyramid.obj",
+      "position": [
+        0.44999998807907104,
+        0.0,
+        1.001918911933899
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visible": true
+    }
+  ],
+  "selectedIndex": 0,
+  "showGrid": true,
+  "version": 1
+}

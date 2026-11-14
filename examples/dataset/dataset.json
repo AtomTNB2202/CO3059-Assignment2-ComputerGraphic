@@ -1,0 +1,113 @@
+{
+  "animation_policy": "static; base scene time frozen",
+  "annotations": "annotations.json",
+  "base_scene": "base_scene.json",
+  "format": "CO3059Dataset",
+  "reproducibility": "same source assets, build, settings and seed; GPU/driver may affect rasterization",
+  "samples": [
+    {
+      "depth": "sample_000001/depth.npy",
+      "image_id": 1,
+      "instance_ids": "sample_000001/instance_ids.png",
+      "metadata": "sample_000001/sample.json",
+      "rgb": "sample_000001/rgb.png",
+      "sample_id": "sample_000001",
+      "sample_index": 0,
+      "scene": "sample_000001/scene.json"
+    },
+    {
+      "depth": "sample_000002/depth.npy",
+      "image_id": 2,
+      "instance_ids": "sample_000002/instance_ids.png",
+      "metadata": "sample_000002/sample.json",
+      "rgb": "sample_000002/rgb.png",
+      "sample_id": "sample_000002",
+      "sample_index": 1,
+      "scene": "sample_000002/scene.json"
+    },
+    {
+      "depth": "sample_000003/depth.npy",
+      "image_id": 3,
+      "instance_ids": "sample_000003/instance_ids.png",
+      "metadata": "sample_000003/sample.json",
+      "rgb": "sample_000003/rgb.png",
+      "sample_id": "sample_000003",
+      "sample_index": 2,
+      "scene": "sample_000003/scene.json"
+    },
+    {
+      "depth": "sample_000004/depth.npy",
+      "image_id": 4,
+      "instance_ids": "sample_000004/instance_ids.png",
+      "metadata": "sample_000004/sample.json",
+      "rgb": "sample_000004/rgb.png",
+      "sample_id": "sample_000004",
+      "sample_index": 3,
+      "scene": "sample_000004/scene.json"
+    },
+    {
+      "depth": "sample_000005/depth.npy",
+      "image_id": 5,
+      "instance_ids": "sample_000005/instance_ids.png",
+      "metadata": "sample_000005/sample.json",
+      "rgb": "sample_000005/rgb.png",
+      "sample_id": "sample_000005",
+      "sample_index": 4,
+      "scene": "sample_000005/scene.json"
+    },
+    {
+      "depth": "sample_000006/depth.npy",
+      "image_id": 6,
+      "instance_ids": "sample_000006/instance_ids.png",
+      "metadata": "sample_000006/sample.json",
+      "rgb": "sample_000006/rgb.png",
+      "sample_id": "sample_000006",
+      "sample_index": 5,
+      "scene": "sample_000006/scene.json"
+    },
+    {
+      "depth": "sample_000007/depth.npy",
+      "image_id": 7,
+      "instance_ids": "sample_000007/instance_ids.png",
+      "metadata": "sample_000007/sample.json",
+      "rgb": "sample_000007/rgb.png",
+      "sample_id": "sample_000007",
+      "sample_index": 6,
+      "scene": "sample_000007/scene.json"
+    },
+    {
+      "depth": "sample_000008/depth.npy",
+      "image_id": 8,
+      "instance_ids": "sample_000008/instance_ids.png",
+      "metadata": "sample_000008/sample.json",
+      "rgb": "sample_000008/rgb.png",
+      "sample_id": "sample_000008",
+      "sample_index": 7,
+      "scene": "sample_000008/scene.json"
+    }
+  ],
+  "settings": {
+    "background": true,
+    "camera": true,
+    "camera_distance_jitter_fraction": 0.07999999821186066,
+    "camera_pitch_jitter_degrees": 5.0,
+    "camera_yaw_jitter_degrees": 12.0,
+    "count": 8,
+    "height": 480,
+    "lighting": true,
+    "materials": true,
+    "position_jitter": 0.20000000298023224,
+    "scale_jitter_fraction": 0.10000000149011612,
+    "seed": 42,
+    "texture_pool": [
+      "../../assets/textures/checker.png",
+      "../../assets/textures/checker.jpg"
+    ],
+    "textures": true,
+    "transforms": true,
+    "width": 640,
+    "yaw_jitter_degrees": 20.0
+  },
+  "settings_file": "settings.json",
+  "version": 1
+}

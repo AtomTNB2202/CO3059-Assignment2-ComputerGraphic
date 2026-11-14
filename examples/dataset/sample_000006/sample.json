@@ -1,0 +1,292 @@
+{
+  "annotations": "annotations.json",
+  "background_id": 0,
+  "bbox_format": "[x_min,y_min,width,height] from visible pixels; top-left origin",
+  "bbox_preview": "bbox_preview.png",
+  "camera": {
+    "aspect": 1.3333333333333333,
+    "distance": 8.041038513183594,
+    "pitch_degrees": 32.66311264038086,
+    "position": [
+      3.908949613571167,
+      4.089735984802246,
+      5.526762962341309
+    ],
+    "target": [
+      0.0,
+      -0.25,
+      0.0
+    ],
+    "up_world": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov_degrees": 45.0,
+    "yaw_degrees": 35.270870208740234
+  },
+  "depth": {
+    "background_value": 0,
+    "definition": "positive camera-forward Z (negative view-space Z); not Euclidean range",
+    "dtype": "<f4",
+    "far_plane": 500.0,
+    "file": "depth.npy",
+    "max_valid": 10.426868438720703,
+    "min_valid": 5.076087474822998,
+    "near_plane": 0.05000000074505806,
+    "origin": "top-left",
+    "preview": "depth_preview.png",
+    "preview_mapping": "background=0; valid=1+round(254*(max-z)/(max-min)); constant depth=255",
+    "preview_scale": "per-sample visible min/max; brighter is nearer",
+    "shape": [
+      480,
+      640
+    ],
+    "source_buffer_bits": 24,
+    "units": "scene_units",
+    "valid_pixels": 88336
+  },
+  "generator": {
+    "sample_id": "sample_000006",
+    "sample_index": 5,
+    "seed": 42
+  },
+  "height": 480,
+  "id_encoding": "instance_id = R + 256*G + 65536*B; channels are RGB bytes",
+  "instance_ids": "instance_ids.png",
+  "instances": [
+    {
+      "bbox": [
+        59,
+        138,
+        528,
+        342
+      ],
+      "category_id": 1,
+      "category_name": "table",
+      "instance_id": 1,
+      "mask": "mask_1.png",
+      "material": {
+        "color": [
+          0.3600531220436096,
+          0.3384481966495514,
+          0.14552786946296692
+        ],
+        "mode": 2,
+        "shininess": 21.99047088623047,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/table.obj",
+      "name": "Table",
+      "position": [
+        0.0,
+        -1.0499999523162842,
+        0.0
+      ],
+      "randomize_transform": false,
+      "rotation_degrees": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "visible": true,
+      "visible_pixels": 67161
+    },
+    {
+      "bbox": [
+        207,
+        115,
+        83,
+        96
+      ],
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 2,
+      "mask": "mask_2.png",
+      "material": {
+        "color": [
+          0.6039393544197083,
+          0.1865234375,
+          0.13495858013629913
+        ],
+        "mode": 3,
+        "shininess": 31.147727966308594,
+        "texture_path": "../../../assets/textures/checker.jpg"
+      },
+      "model_path": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup A",
+      "position": [
+        -1.1160783767700195,
+        0.5593419671058655,
+        0.03313323110342026
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        -4.370708465576172,
+        0.0
+      ],
+      "scale": [
+        0.6615147590637207,
+        0.6615147590637207,
+        0.6615147590637207
+      ],
+      "visible": true,
+      "visible_pixels": 5965
+    },
+    {
+      "bbox": [
+        323,
+        130,
+        59,
+        88
+      ],
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 3,
+      "mask": "mask_3.png",
+      "material": {
+        "color": [
+          0.16087405383586884,
+          0.39417389035224915,
+          0.713930070400238
+        ],
+        "mode": 3,
+        "shininess": 22.02205467224121,
+        "texture_path": "../../../assets/textures/checker.png"
+      },
+      "model_path": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup B",
+      "position": [
+        0.15588361024856567,
+        0.4911906123161316,
+        -0.6023493409156799
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        -42.653221130371094,
+        0.0
+      ],
+      "scale": [
+        0.5801874399185181,
+        0.5801874399185181,
+        0.5801874399185181
+      ],
+      "visible": true,
+      "visible_pixels": 4706
+    },
+    {
+      "bbox": [
+        319,
+        213,
+        128,
+        84
+      ],
+      "category_id": 3,
+      "category_name": "book",
+      "instance_id": 4,
+      "mask": "mask_4.png",
+      "material": {
+        "color": [
+          0.14870060980319977,
+          0.24981823563575745,
+          0.5171871781349182
+        ],
+        "mode": 3,
+        "shininess": 62.33586883544922,
+        "texture_path": "../../../assets/textures/checker.jpg"
+      },
+      "model_path": "../../../assets/models/tabletop/book.obj",
+      "name": "Book",
+      "position": [
+        1.0878281593322754,
+        0.10192565619945526,
+        0.2254999577999115
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        -10.805801391601562,
+        0.0
+      ],
+      "scale": [
+        0.6461710333824158,
+        0.6461710333824158,
+        0.6461710333824158
+      ],
+      "visible": true,
+      "visible_pixels": 5954
+    },
+    {
+      "bbox": [
+        217,
+        198,
+        76,
+        76
+      ],
+      "category_id": 4,
+      "category_name": "ball",
+      "instance_id": 5,
+      "mask": "mask_5.png",
+      "material": {
+        "color": [
+          1.0,
+          0.4853406250476837,
+          0.05743587389588356
+        ],
+        "mode": 2,
+        "shininess": 49.340450286865234,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/ball.obj",
+      "name": "Ball",
+      "position": [
+        -0.0443054735660553,
+        0.45198220014572144,
+        1.2587424516677856
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        4.957832336425781,
+        0.0
+      ],
+      "scale": [
+        0.44698217511177063,
+        0.44698217511177063,
+        0.44698217511177063
+      ],
+      "visible": true,
+      "visible_pixels": 4550
+    }
+  ],
+  "mask_encoding": "0 = background or other instance; 255 = visible instance",
+  "origin": "top-left",
+  "preview": "instance_preview.png",
+  "rendering": {
+    "animation_time": 0.0,
+    "background": [
+      0.3429742157459259,
+      0.22625583410263062,
+      0.18214282393455505
+    ],
+    "grid": false,
+    "light_position": [
+      3.907184600830078,
+      4.715738296508789,
+      5.650299072265625
+    ],
+    "samples_per_pixel": 1
+  },
+  "rgb": "rgb.png",
+  "sample_id": "sample_000006",
+  "scene": "scene.json",
+  "width": 640,
+  "wireframe_policy": "filled surfaces"
+}

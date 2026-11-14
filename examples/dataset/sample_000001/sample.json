@@ -1,0 +1,292 @@
+{
+  "annotations": "annotations.json",
+  "background_id": 0,
+  "bbox_format": "[x_min,y_min,width,height] from visible pixels; top-left origin",
+  "bbox_preview": "bbox_preview.png",
+  "camera": {
+    "aspect": 1.3333333333333333,
+    "distance": 8.166238784790039,
+    "pitch_degrees": 23.39160919189453,
+    "position": [
+      2.2466881275177,
+      2.9921069145202637,
+      7.150425910949707
+    ],
+    "target": [
+      0.0,
+      -0.25,
+      0.0
+    ],
+    "up_world": [
+      0,
+      1,
+      0
+    ],
+    "vertical_fov_degrees": 45.0,
+    "yaw_degrees": 17.44289779663086
+  },
+  "depth": {
+    "background_value": 0,
+    "definition": "positive camera-forward Z (negative view-space Z); not Euclidean range",
+    "dtype": "<f4",
+    "far_plane": 500.0,
+    "file": "depth.npy",
+    "max_valid": 10.603863716125488,
+    "min_valid": 5.491593837738037,
+    "near_plane": 0.05000000074505806,
+    "origin": "top-left",
+    "preview": "depth_preview.png",
+    "preview_mapping": "background=0; valid=1+round(254*(max-z)/(max-min)); constant depth=255",
+    "preview_scale": "per-sample visible min/max; brighter is nearer",
+    "shape": [
+      480,
+      640
+    ],
+    "source_buffer_bits": 24,
+    "units": "scene_units",
+    "valid_pixels": 68549
+  },
+  "generator": {
+    "sample_id": "sample_000001",
+    "sample_index": 0,
+    "seed": 42
+  },
+  "height": 480,
+  "id_encoding": "instance_id = R + 256*G + 65536*B; channels are RGB bytes",
+  "instance_ids": "instance_ids.png",
+  "instances": [
+    {
+      "bbox": [
+        39,
+        167,
+        520,
+        310
+      ],
+      "category_id": 1,
+      "category_name": "table",
+      "instance_id": 1,
+      "mask": "mask_1.png",
+      "material": {
+        "color": [
+          0.5527642369270325,
+          0.2734275162220001,
+          0.10837864875793457
+        ],
+        "mode": 2,
+        "shininess": 75.42015075683594,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/table.obj",
+      "name": "Table",
+      "position": [
+        0.0,
+        -1.0499999523162842,
+        0.0
+      ],
+      "randomize_transform": false,
+      "rotation_degrees": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "visible": true,
+      "visible_pixels": 51189
+    },
+    {
+      "bbox": [
+        210,
+        144,
+        89,
+        89
+      ],
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 2,
+      "mask": "mask_2.png",
+      "material": {
+        "color": [
+          0.9564960598945618,
+          0.19197477400302887,
+          0.15715110301971436
+        ],
+        "mode": 2,
+        "shininess": 95.18801879882812,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup A",
+      "position": [
+        -0.8640480041503906,
+        0.5065298080444336,
+        0.16008523106575012
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        34.6939697265625,
+        0.0
+      ],
+      "scale": [
+        0.5984922051429749,
+        0.5984922051429749,
+        0.5984922051429749
+      ],
+      "visible": true,
+      "visible_pixels": 4724
+    },
+    {
+      "bbox": [
+        310,
+        136,
+        61,
+        82
+      ],
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 3,
+      "mask": "mask_3.png",
+      "material": {
+        "color": [
+          0.12339388579130173,
+          0.6162373423576355,
+          0.7377200722694397
+        ],
+        "mode": 2,
+        "shininess": 42.989967346191406,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/cup.obj",
+      "name": "Cup B",
+      "position": [
+        0.21141302585601807,
+        0.5015261173248291,
+        -0.5330766439437866
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        -41.15959930419922,
+        0.0
+      ],
+      "scale": [
+        0.5925211906433105,
+        0.5925211906433105,
+        0.5925211906433105
+      ],
+      "visible": true,
+      "visible_pixels": 4413
+    },
+    {
+      "bbox": [
+        320,
+        209,
+        120,
+        55
+      ],
+      "category_id": 3,
+      "category_name": "book",
+      "instance_id": 4,
+      "mask": "mask_4.png",
+      "material": {
+        "color": [
+          0.13550806045532227,
+          0.24657630920410156,
+          0.5865694880485535
+        ],
+        "mode": 3,
+        "shininess": 24.85867691040039,
+        "texture_path": "../../../assets/textures/checker.png"
+      },
+      "model_path": "../../../assets/models/tabletop/book.obj",
+      "name": "Book",
+      "position": [
+        0.9392902255058289,
+        0.10576988756656647,
+        0.36533743143081665
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        -2.3784866333007812,
+        0.0
+      ],
+      "scale": [
+        0.6717992424964905,
+        0.6717992424964905,
+        0.6717992424964905
+      ],
+      "visible": true,
+      "visible_pixels": 4712
+    },
+    {
+      "bbox": [
+        247,
+        189,
+        67,
+        67
+      ],
+      "category_id": 4,
+      "category_name": "ball",
+      "instance_id": 5,
+      "mask": "mask_5.png",
+      "material": {
+        "color": [
+          1.0,
+          0.650751531124115,
+          0.10056935995817184
+        ],
+        "mode": 2,
+        "shininess": 57.91024398803711,
+        "texture_path": ""
+      },
+      "model_path": "../../../assets/models/tabletop/ball.obj",
+      "name": "Ball",
+      "position": [
+        -0.15000751614570618,
+        0.4084029495716095,
+        1.1018571853637695
+      ],
+      "randomize_transform": true,
+      "rotation_degrees": [
+        0.0,
+        3.0919742584228516,
+        0.0
+      ],
+      "scale": [
+        0.4034029245376587,
+        0.4034029245376587,
+        0.4034029245376587
+      ],
+      "visible": true,
+      "visible_pixels": 3511
+    }
+  ],
+  "mask_encoding": "0 = background or other instance; 255 = visible instance",
+  "origin": "top-left",
+  "preview": "instance_preview.png",
+  "rendering": {
+    "animation_time": 0.0,
+    "background": [
+      0.2744913399219513,
+      0.37265896797180176,
+      0.3691778779029846
+    ],
+    "grid": false,
+    "light_position": [
+      4.45534610748291,
+      5.977166652679443,
+      2.014401912689209
+    ],
+    "samples_per_pixel": 1
+  },
+  "rgb": "rgb.png",
+  "sample_id": "sample_000001",
+  "scene": "scene.json",
+  "width": 640,
+  "wireframe_policy": "filled surfaces"
+}

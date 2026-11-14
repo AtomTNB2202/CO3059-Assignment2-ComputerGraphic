@@ -1,0 +1,211 @@
+{
+  "animation": {
+    "playing": false,
+    "speed": 1.0,
+    "time": 0.0
+  },
+  "background": [
+    0.1599999964237213,
+    0.1899999976158142,
+    0.23000000417232513
+  ],
+  "camera": {
+    "distance": 8.5,
+    "frontView": false,
+    "moveSpeed": 5.0,
+    "pitch": 28.0,
+    "target": [
+      0.0,
+      -0.25,
+      0.0
+    ],
+    "yaw": 25.0
+  },
+  "format": "CGAssignment1",
+  "lightPosition": [
+    3.0,
+    6.0,
+    4.0
+  ],
+  "next_instance_id": 6,
+  "objects": [
+    {
+      "category_id": 1,
+      "category_name": "table",
+      "instance_id": 1,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.44999998807907104,
+          0.2800000011920929,
+          0.11999999731779099
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "../../assets/models/tabletop/table.obj",
+      "name": "Table",
+      "position": [
+        0.0,
+        -1.0499999523162842,
+        0.0
+      ],
+      "randomize_transform": false,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 2,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.800000011920929,
+          0.1599999964237213,
+          0.11999999731779099
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "../../assets/models/tabletop/cup.obj",
+      "name": "Cup A",
+      "position": [
+        -0.949999988079071,
+        0.5496927499771118,
+        0.15000000596046448
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        15.0,
+        0.0
+      ],
+      "scale": [
+        0.6499999761581421,
+        0.6499999761581421,
+        0.6499999761581421
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 2,
+      "category_name": "cup",
+      "instance_id": 3,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.11999999731779099,
+          0.6000000238418579,
+          0.699999988079071
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "../../assets/models/tabletop/cup.obj",
+      "name": "Cup B",
+      "position": [
+        0.10000000149011612,
+        0.46589386463165283,
+        -0.699999988079071
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        -30.0,
+        0.0
+      ],
+      "scale": [
+        0.550000011920929,
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 3,
+      "category_name": "book",
+      "instance_id": 4,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.11999999731779099,
+          0.20000000298023224,
+          0.75
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "../../assets/models/tabletop/book.obj",
+      "name": "Book",
+      "position": [
+        1.100000023841858,
+        0.10999999940395355,
+        0.30000001192092896
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        -20.0,
+        0.0
+      ],
+      "scale": [
+        0.699999988079071,
+        0.699999988079071,
+        0.699999988079071
+      ],
+      "visible": true
+    },
+    {
+      "category_id": 4,
+      "category_name": "ball",
+      "instance_id": 5,
+      "kind": 2,
+      "material": {
+        "color": [
+          0.949999988079071,
+          0.550000011920929,
+          0.07999999821186066
+        ],
+        "mode": 2,
+        "shininess": 32.0,
+        "texture": ""
+      },
+      "model": "../../assets/models/tabletop/ball.obj",
+      "name": "Ball",
+      "position": [
+        -0.20000000298023224,
+        0.42500001192092896,
+        1.100000023841858
+      ],
+      "randomize_transform": true,
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.41999998688697815,
+        0.41999998688697815,
+        0.41999998688697815
+      ],
+      "visible": true
+    }
+  ],
+  "selectedIndex": -1,
+  "showGrid": false,
+  "version": 1
+}

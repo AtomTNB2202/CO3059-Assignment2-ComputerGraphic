@@ -1,0 +1,22 @@
+{
+  "background": true,
+  "camera": true,
+  "camera_distance_jitter_fraction": 0.07999999821186066,
+  "camera_pitch_jitter_degrees": 5.0,
+  "camera_yaw_jitter_degrees": 12.0,
+  "count": 8,
+  "height": 480,
+  "lighting": true,
+  "materials": true,
+  "position_jitter": 0.20000000298023224,
+  "scale_jitter_fraction": 0.10000000149011612,
+  "seed": 42,
+  "texture_pool": [
+    "../../assets/textures/checker.png",
+    "../../assets/textures/checker.jpg"
+  ],
+  "textures": true,
+  "transforms": true,
+  "width": 640,
+  "yaw_jitter_degrees": 20.0
+}
