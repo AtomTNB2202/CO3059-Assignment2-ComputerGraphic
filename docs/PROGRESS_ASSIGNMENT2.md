@@ -1,7 +1,8 @@
 # Bản ghi tiến độ Assignment 2
 
 Ngày đối chiếu: 14/11/2026. Đây là ghi nhận triển khai để chuẩn bị báo cáo tiến độ,
-không thay thế báo cáo cuối kỳ bằng tiếng Anh/LaTeX. Tên nhóm chưa được xác nhận;
+không thay thế báo cáo cuối kỳ bằng tiếng Anh/LaTeX. Người thực hiện Assignment 2:
+**Nguyễn Vinh Anh Quân — 2353007**;
 repo đã chọn: https://github.com/AtomTNB2202/CO3059-Assignment2-ComputerGraphic.
 Không suy ra thành viên từ tên tài khoản Windows.
 
@@ -36,7 +37,7 @@ Kết quả local: `output/milestone1` đến `output/milestone4`; log CTest ở
 
 1. Ghi đúng phạm vi định dạng: hiện chọn COCO theo §2.1 "COCO or YOLO"; chưa có YOLO.
    Giữ danh sách vai trò thư viện phụ, không mô tả engine black-box là tự triển khai.
-2. Xác nhận thành viên/MSSV cho report và duy trì source trong repo đã chọn.
+2. Dùng tên Nguyễn Vinh Anh Quân — 2353007 trong report và duy trì source trong repo đã chọn.
 3. Viết report cuối kỳ tiếng Anh, LaTeX: kiến trúc, giải thích chức năng, hướng dẫn chạy,
    ảnh kết quả thực tế, link GitHub; biên dịch và kiểm tra đủ `.tex` và `.pdf`.
 4. Tập demo theo `DEMO_ASSIGNMENT2_VI.md`, chạy gói source trên môi trường nộp/demo,

@@ -1,7 +1,8 @@
 # Computer Graphics Assignments 1 and 2
 
-Original Assignment 1 attribution: **Bùi Quốc Thái — 2353086**.
-Assignment 2 team/author information for the final report has not yet been confirmed.
+**Assignment 2 — Nguyễn Vinh Anh Quân — 2353007**
+
+Original Assignment 1 attribution: Bùi Quốc Thái — 2353086.
 
 HCMUT · Computer Graphics (CO3059) · Semester I, 2026–2027
 

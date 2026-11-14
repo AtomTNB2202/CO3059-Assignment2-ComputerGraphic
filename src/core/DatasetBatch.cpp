@@ -40,7 +40,7 @@ void Application::exportBatch(const std::filesystem::path &output, const BatchSe
             glfwSetWindowTitle(window, title.c_str());
         }
     } restore{scene, camera, renderer, base, renderer.animationTime, window,
-               "Computer Graphics Assignment 1 | Bui Quoc Thai - 2353086"};
+               "Computer Graphics Assignment 2 | Synthetic Dataset Generator"};
     // Cache external textures once per run; object geometry remains shared on the GPU.
     std::map<std::string, std::shared_ptr<Texture>> textures;
     for (const auto &name : settings.texturePaths)

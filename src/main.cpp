@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     if (smokeTest || exportScene || exportBatch)
         glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
     GLFWwindow *window = glfwCreateWindow(
-        1440, 900, "Computer Graphics Assignment 1 | Bui Quoc Thai - 2353086", nullptr, nullptr);
+        1440, 900, "Computer Graphics Assignment 2 | Synthetic Dataset Generator", nullptr, nullptr);
     if (!window)
     {
         glfwTerminate();
