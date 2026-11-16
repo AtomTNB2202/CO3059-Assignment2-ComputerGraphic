@@ -13,5 +13,4 @@ imgui.ini
 /report/*.log
 /report/*.out
 /report/*.toc
-/report/report.tex
-/report/report.pdf
+/report/compile-output.txt

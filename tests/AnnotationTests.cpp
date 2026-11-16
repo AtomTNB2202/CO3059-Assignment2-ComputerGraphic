@@ -24,6 +24,11 @@ int main(int argc, char **argv)
         std::vector<int> ids = {1,1,0,2,2, 1,0,0,0,2, 0,0,1,0,2, 1,1,1,2,2};
         std::vector<InstanceLabel> labels = {{1,7,"pyramid"}, {2,7,"pyramid"}, {3,11,"sphere"}};
         auto coco = makeCoco(5, 4, ids, labels);
+        require(yoloLabels(coco) == "0 0.300000000 0.500000000 0.600000000 1.000000000\n0 0.800000000 0.500000000 0.400000000 1.000000000\n",
+                "YOLO normalization or sparse category remapping failed.");
+        require(yoloLabels(makeCoco(1,1,{3},labels)) == "1 0.500000000 0.500000000 1.000000000 1.000000000\n",
+                "YOLO class indices changed when other classes became invisible.");
+        require(yoloLabels(makeCoco(1,1,{0},labels)).empty(), "Empty image has YOLO labels.");
         const auto &a = coco.at("annotations");
         require(a.size() == 2 && coco.at("categories").size() == 2,
                 "Invisible instance produced an annotation or category was lost.");

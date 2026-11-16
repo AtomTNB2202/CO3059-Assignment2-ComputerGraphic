@@ -3,8 +3,8 @@
 #include <vector>
 
 float linearCameraDepth(float bufferDepth, float nearPlane, float farPlane);
-void writeDepthNpy(const std::filesystem::path &path, int width, int height,
-                    const std::vector<float> &depth);
+std::vector<float> readDepthNpy(const std::filesystem::path &path, int width, int height);
+void writeDepthNpy(const std::filesystem::path &path, int width, int height, const std::vector<float> &depth);
 
 struct DepthPreview
 {

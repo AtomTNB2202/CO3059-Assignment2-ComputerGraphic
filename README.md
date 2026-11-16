@@ -82,7 +82,30 @@ select **Build > Build All**, select the executable startup item, and press
 
 ## Features and usage
 
-Assignment 2 adds **Export RGB + masks + COCO + depth** below the scene list.
+Assignment 2 adds **Export...** in the toolbar and below the scene list.
+The dialog selects the destination, current scene or batch, RGB, depth, masks,
+COCO and optional preview PNGs. **Assignment 2 / all outputs** restores the full
+dataset preset. COCO requires RGB; metadata and replay scenes are always saved.
+Every export creates a new subfolder, shows progress, and offers **Open folder**
+and **Open first image** on completion. Canceling a batch keeps incomplete data
+under a `.partial` folder and restores the editor scene.
+
+Batch count, seed, dimensions and variation controls remain in **Scene > Batch
+generation**. **Generate batch...** opens the same output/destination dialog.
+
+**Inspector > Scene view** selects Scene/edit, RGB, Depth, Segmentation or
+Bounding boxes for the main viewport. Camera controls remain available; return to
+Scene/edit for picking and gizmos.
+
+The **Export** dialog has its own image preview, rendered in memory at the export
+resolution. Switch RGB/Depth/Segmentation/Bounding boxes before writing files.
+In Batch mode, choose a sample number to inspect the seeded variation; batch
+settings remain in Scene. Animation pauses while the dialog is open. Extra PNG
+files are optional saved outputs, independent of the in-dialog preview.
+Depth is normalized for display (nearer is brighter), not a metric grayscale image.
+See [the Vietnamese export/preview guide](docs/EXPORT_PREVIEW_VI.md).
+
+The following describes the default full-output preset and default destination.
 It writes clean RGB, an exact 24-bit instance ID PNG, a color preview, binary
 per-instance masks, a sample manifest, COCO annotations (visible bounding boxes,
 class labels, compressed RLE masks), and `bbox_preview.png` into `dataset/` beside
@@ -247,7 +270,9 @@ The build script's `-Test` option runs CTest:
   files, depth-aware picking, hidden objects, resizing, focus bounds, and animated
   pixels. Injected ImGui mouse events exercise all three translation arrows and
   rotation rings, checking that scale, camera, and other objects stay unchanged.
-  It renders seven demonstration scenes and saves screenshots. A working GPU is required.
+  It captures the seven demonstration scenes, four live preview modes and export
+  dialog, and saves screenshots. Selective export, cancellation and GUI progress
+  frames are also exercised. A working GPU is required.
   Dataset checks cover aligned RGB/ID/depth, planes at known depths, reproducible
   batch variation, pinned transforms, category mappings, saved instance IDs and
   editor restoration after batch export.
@@ -261,10 +286,10 @@ Start with [Assignment 2 readiness and demo checklist](docs/MILESTONE5_VI.md),
 [demo script and questions](docs/DEMO_ASSIGNMENT2_VI.md), and
 [implementation progress](docs/PROGRESS_ASSIGNMENT2.md).
 
-The `report/` directory in the original checkout contains the **Assignment 1**
-report. It is excluded from the draft Assignment 2 source archive. A final
-Assignment 2 report has not yet been authored; both its English LaTeX source
-and compiled PDF are still required for final submission.
+The English **Assignment 2** report is available as [LaTeX source](report/report.tex)
+and [compiled PDF](report/report.pdf). It follows the supplied Assignment 1 layout
+and documents the current COCO/YOLO, depth, batch and viewer implementation.
+See [report build instructions](report/README.md). Keep `report/figures/` with the TEX.
 
 Create a draft source package (without build caches or the original report):
 
@@ -275,8 +300,8 @@ python scripts/package_assignment2.py --evidence output/milestone4/batch_seed42_
 The archive includes the 8-image evidence batch under `examples/dataset/` when
 the command above is used. Scene/texture references in the copied evidence are
 rebased to the included assets. See `SUBMISSION_STATUS.md` for pending items.
-This is a **draft source package**, not a complete final submission. The final
-Assignment 2 report is still pending. No LMS upload has been performed.
+This is a **draft source package**. Its packaging script excludes `report/`, so
+attach the report TEX, PDF and figures separately. No LMS upload has been performed.
 
 ## Troubleshooting and boundaries
 
@@ -293,11 +318,13 @@ Assignment 2 report is still pending. No LMS upload has been performed.
   show a message in the status bar and leave existing objects intact.
 - **Objects outside view:** reset/focus the camera, zoom out, or reset the transform.
 - Save scenes explicitly before exit. PLY import, molecular vibration, undo/redo,
-  YOLO export and tracking/captioning are not implemented. OBJ, COCO, depth and
+  and tracking/captioning are not implemented. OBJ, COCO, YOLO detection, depth and
   seeded static-scene dataset generation are implemented.
 - Depth is camera-forward Z in scene units; its 8-bit preview is rescaled per sample.
-- Annotation export currently selects COCO according to section 2.1's "COCO or
-  YOLO" wording. Section 2.2 also lists both formats; YOLO is not implemented.
+- Annotation export supports COCO and YOLO detection (normalized boxes, zero-based classes).
+  YOLO output contains image/label pairs, a class mapping and a dataset YAML template;
+  supply a separate validation split before training. Use **Dataset...** to browse
+  saved samples and hover images to read float32 depth. See [export/viewer guide](docs/EXPORT_PREVIEW_VI.md).
   Support libraries perform UI, loading and I/O; rendering/annotation logic is
   implemented in this project. See THIRD_PARTY.md for their roles and versions.
 - Bohr and molecule sizes are illustrative, not a physical simulation; CO2 uses

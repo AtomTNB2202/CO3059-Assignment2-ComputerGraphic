@@ -1,0 +1,20 @@
+# Model credits (keep these files with the demo)
+
+tetra.obj
+  Written for CO3059. Four vertices, four faces. Open it in a text editor.
+
+teapot.obj
+  Utah teapot (Martin Newell). Public-domain classic.
+  This OBJ: https://github.com/alecjacobson/common-3d-test-models
+    (data/teapot.obj)
+
+suzanne.obj
+  Blender monkey. (c) Blender Foundation, CC-BY.
+  This OBJ: same collection (data/suzanne.obj)
+
+bunny.obj
+  Stanford Bunny, Stanford Computer Graphics Laboratory.
+  Free for research and teaching; credit the lab. Not for commercial products.
+  Original scan: http://graphics.stanford.edu/data/3Dscanrep/
+  This OBJ (bun_zipper): alecjacobson/common-3d-test-models
+    (data/stanford-bunny.obj)

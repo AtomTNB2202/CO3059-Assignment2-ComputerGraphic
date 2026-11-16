@@ -19,6 +19,7 @@ void Application::focusSelected()
 void Application::gizmo()
 {
     gizmoHovered = gizmoActive = false;
+    if (previewMode != 0) return;
     auto *object = scene.selection();
     if (!object || !object->visible)
         return;

@@ -8,3 +8,5 @@ enum class FileKind
     Texture
 };
 std::filesystem::path chooseFile(GLFWwindow *window, FileKind kind, bool save = false);
+std::filesystem::path chooseFolder(GLFWwindow *window);
+void openLocalPath(const std::filesystem::path &path);

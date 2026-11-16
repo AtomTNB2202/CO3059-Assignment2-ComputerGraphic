@@ -85,7 +85,7 @@ void Application::input()
     auto &io = ImGui::GetIO();
     bool inside = io.MousePos.x >= viewportLeft && io.MousePos.x < viewportLeft + viewportWidth &&
                   io.MousePos.y >= viewportTop && io.MousePos.y < viewportTop + viewportHeight;
-    if (inside && !io.WantCaptureMouse && !gizmoHovered && !io.KeyShift && !io.KeyCtrl &&
+    if (previewMode == 0 && inside && !io.WantCaptureMouse && !gizmoHovered && !io.KeyShift && !io.KeyCtrl &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left))
         pendingPick = {(io.MousePos.x - viewportLeft) / viewportWidth,
                        (io.MousePos.y - viewportTop) / viewportHeight};
@@ -197,8 +197,10 @@ void Application::screenshot(const std::filesystem::path &path)
     status = "Saved screenshots/" + path.filename().u8string() + " next to the executable.";
 }
 
-void Application::exportSample(const std::filesystem::path &output, int width, int height)
+void Application::exportSample(const std::filesystem::path &output, int width, int height, const ExportOptions &options)
 {
+    if (!options.any()) throw std::runtime_error("Choose at least one export output.");
+    if ((options.coco || options.yolo) && !options.rgb) throw std::runtime_error("COCO/YOLO require RGB images.");
     auto partial = output;
     partial += ".partial";
     if (std::filesystem::exists(output) || std::filesystem::exists(partial))
@@ -233,15 +235,15 @@ void Application::exportSample(const std::filesystem::path &output, int width, i
     }
     std::vector<InstanceLabel> labels;
     for (const auto &object : scene.objects)
-        labels.push_back({object.id, object.categoryId, object.categoryName});
+        labels.push_back({object.id, (options.coco || options.yolo) ? object.categoryId : 1, (options.coco || options.yolo) ? object.categoryName : "object"});
     auto coco = makeCoco(width, height, ids, labels);
     auto depthPreview = makeDepthPreview(frame.depth);
     std::filesystem::create_directories(partial);
-    writeDepthNpy(partial / "depth.npy", width, height, frame.depth);
-    writePng("depth_preview.png", 1, depthPreview.pixels.data());
-    writePng("rgb.png", 3, frame.rgb.data());
-    writePng("instance_ids.png", 3, frame.instanceIds.data());
-    writePng("instance_preview.png", 3, preview.data());
+    if (options.depth) writeDepthNpy(partial / "depth.npy", width, height, frame.depth);
+    if (options.depthPreview) writePng("depth_preview.png", 1, depthPreview.pixels.data());
+    if (options.rgb) writePng("rgb.png", 3, frame.rgb.data());
+    if (options.masks) writePng("instance_ids.png", 3, frame.instanceIds.data());
+    if (options.segmentationPreview) writePng("instance_preview.png", 3, preview.data());
     auto boxed = frame.rgb;
     for (const auto &annotation : coco.at("annotations"))
     {
@@ -256,7 +258,7 @@ void Application::exportSample(const std::filesystem::path &output, int width, i
         for (int x = x0; x <= x1; ++x) { dot(x, y0); dot(x, y1); }
         for (int y = y0; y <= y1; ++y) { dot(x0, y); dot(x1, y); }
     }
-    writePng("bbox_preview.png", 3, boxed.data());
+    if (options.bboxPreview) writePng("bbox_preview.png", 3, boxed.data());
     nlohmann::json info = {{"width", width}, {"height", height}, {"origin", "top-left"},
         {"sample_id", output.filename().u8string()}, {"scene", "scene.json"},
         {"rgb", "rgb.png"}, {"instance_ids", "instance_ids.png"},
@@ -291,7 +293,7 @@ void Application::exportSample(const std::filesystem::path &output, int width, i
     {
         std::string name = "mask_" + std::to_string(object.id) + ".png";
         size_t area = areas[object.id];
-        if (area)
+        if (area && options.masks)
         {
             for (size_t p = 0; p < count; ++p) mask[p] = ids[p] == object.id ? 255 : 0;
             writePng(name, 1, mask.data());
@@ -309,12 +311,24 @@ void Application::exportSample(const std::filesystem::path &output, int width, i
                           {"texture_path", object.material.texturePath}}},
             {"category_id", object.categoryId}, {"category_name", object.categoryName}, {"bbox", bbox},
             {"visible", object.visible}, {"visible_pixels", area},
-            {"mask", area ? nlohmann::json(name) : nlohmann::json(nullptr)}});
+            {"mask", area && options.masks ? nlohmann::json(name) : nlohmann::json(nullptr)}});
     }
-    std::ofstream annotations(partial / "annotations.json", std::ios::binary);
-    annotations << coco.dump(2) << '\n';
-    annotations.close();
-    if (!annotations) throw std::runtime_error("Cannot write annotations.json.");
+    if (options.coco)
+    {
+        std::ofstream annotations(partial / "annotations.json", std::ios::binary);
+        annotations << coco.dump(2) << '\n';
+        annotations.close();
+        if (!annotations) throw std::runtime_error("Cannot write annotations.json.");
+    }
+    if (options.yolo) writeYolo(partial / "yolo", output / "yolo", "rgb", partial / "rgb.png", coco);
+    info["yolo"] = options.yolo ? nlohmann::json("yolo/labels/rgb.txt") : nlohmann::json(nullptr);
+    if (!options.rgb) info["rgb"] = nullptr;
+    if (!options.masks) info["instance_ids"] = nullptr;
+    if (!options.segmentationPreview) info["preview"] = nullptr;
+    if (!options.bboxPreview) info["bbox_preview"] = nullptr;
+    if (!options.coco) info["annotations"] = nullptr;
+    if (!options.depth) info["depth"]["file"] = nullptr;
+    if (!options.depthPreview) info["depth"]["preview"] = nullptr;
     std::ofstream manifest(partial / "sample.json", std::ios::binary);
     manifest << info.dump(2) << '\n';
     manifest.close();
@@ -325,7 +339,7 @@ void Application::exportSample(const std::filesystem::path &output, int width, i
     saveScene(partial / "scene.json", replay);
     // A final sample directory appears only once all files were written successfully.
     std::filesystem::rename(partial, output);
-    status = "Exported RGB + masks + COCO + depth: " + output.u8string();
+    status = "Exported selected outputs: " + output.u8string();
     std::cout << status << '\n';
 }
 
@@ -346,6 +360,8 @@ void Application::smokeScenes(int frame)
     scene.objects.clear();
     scene.selected = -1;
     gizmoMode = frame == 6 ? 1 : 0;
+    previewMode = frame>=7 && frame<=10 ? frame-6 : 0;
+    if(frame==11) exportDialogRequested=true;
     if (frame == 0)
         demo(0);
     else if (frame == 1)
@@ -427,9 +443,11 @@ void Application::run(bool smokeTest)
         ImGui::NewFrame();
         ImGuizmo::BeginFrame();
         gui();
+        exportUi();
+        datasetUi();
         gizmo();
         input();
-        if (!smokeTest)
+        if (!smokeTest && !exportDialogVisible)
             animation.advance(ImGui::GetIO().DeltaTime);
         renderer.animationTime = animation.time;
         glViewport(0, 0, width, height);
@@ -439,28 +457,6 @@ void Application::run(bool smokeTest)
         float sx = width / io.DisplaySize.x, sy = height / io.DisplaySize.y;
         int vx = static_cast<int>(viewportLeft * sx),
             vy = static_cast<int>((io.DisplaySize.y - viewportTop - viewportHeight) * sy);
-        if (batchRequested)
-        {
-            try
-            {
-                auto id = std::chrono::system_clock::now().time_since_epoch().count();
-                exportBatch(root / "dataset" / ("batch_" + std::to_string(id)), batchSettings);
-            }
-            catch (const std::exception &error) { status = error.what(); }
-            batchRequested = false;
-        }
-        if (datasetRequested)
-        {
-            try
-            {
-                auto id = std::chrono::system_clock::now().time_since_epoch().count();
-                exportSample(root / "dataset" / ("sample_" + std::to_string(id)),
-                             std::clamp(int(viewportWidth * sx), 1, 4096),
-                             std::clamp(int(viewportHeight * sy), 1, 4096));
-            }
-            catch (const std::exception &error) { status = error.what(); }
-            datasetRequested = false;
-        }
         renderer.render(scene, camera, vx, vy, std::max(1, int(viewportWidth * sx)),
                         std::max(1, int(viewportHeight * sy)));
         if (pendingPick.x >= 0)
@@ -472,6 +468,7 @@ void Application::run(bool smokeTest)
             scene.selected = renderer.pick(pickX, pickY);
             pendingPick = glm::vec2(-1);
         }
+        if (previewMode != 0) drawPreview(std::max(1, int(viewportWidth * sx)), std::max(1, int(viewportHeight * sy)));
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         if (screenshotRequested || smokeTest)
@@ -496,10 +493,11 @@ void Application::run(bool smokeTest)
         if (error != GL_NO_ERROR)
             throw std::runtime_error("OpenGL error: " + std::to_string(error));
         glfwSwapBuffers(window);
+        if (exportPending) performExport();
         ++frame;
-        if (smokeTest && frame == 7)
+        if (smokeTest && frame == 13)
         {
-            std::cout << "SMOKE PASS: 7 scenes, 17 shapes, 5 modes, surface, atoms, molecules, OBJ, PNG/JPG, "
+            std::cout << "SMOKE PASS: 13 captures, 17 shapes, 5 modes, live previews, export dialog, surface, atoms, molecules, OBJ, PNG/JPG, "
                          "gizmos, "
                          "screenshots.\n";
             break;

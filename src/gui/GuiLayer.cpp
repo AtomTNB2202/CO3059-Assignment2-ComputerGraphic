@@ -55,6 +55,10 @@ void Application::gui()
     ImGui::RadioButton("Move", &gizmoMode, 0);
     ImGui::SameLine();
     ImGui::RadioButton("Rotate", &gizmoMode, 1);
+    ImGui::SameLine();
+    if (ImGui::Button("Export...")) { exportBatchMode = false; exportDialogRequested = true; }
+    ImGui::SameLine();
+    if (ImGui::Button("Dataset...")) datasetViewerOpen = true;
     ImGui::End();
 
     ImGui::SetNextWindowPos({0, top});
@@ -215,10 +219,10 @@ void Application::gui()
             ImGui::TreePop();
         }
         ImGui::TextWrapped("Each sample starts from this scene. Seed repeats the variation. The original scene is restored after export.");
-        if (ImGui::Button("Generate batch", {-1, 0})) batchRequested = true;
-        ImGui::TextWrapped("Progress appears in the window title and terminal. Output: dataset/batch_.../");
+        if (ImGui::Button("Generate batch...", {-1, 0})) { exportBatchMode = true; exportDialogRequested = true; }
+        ImGui::TextWrapped("Choose outputs and destination in the export dialog. Batch settings stay here.");
     }
-    ImGui::BeginChild("Object list", {0, std::max(100.0f, ImGui::GetContentRegionAvail().y - 40)},
+    ImGui::BeginChild("Object list", {0, std::max(100.0f, ImGui::GetContentRegionAvail().y - 135)},
                       ImGuiChildFlags_Borders);
     ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.24f, 0.31f, 0.48f, 1));
     ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.29f, 0.37f, 0.55f, 1));
@@ -252,14 +256,20 @@ void Application::gui()
         ImGui::EndPopup();
     }
     ImGui::Separator();
-    if (ImGui::Button("Export RGB + masks + COCO + depth", {-1, 0}))
-        datasetRequested = true;
-    ImGui::TextWrapped("RGB, masks, COCO, depth data and preview in dataset/ next to the executable.");
+    if (ImGui::Button("Export...", {-1, 0}))
+    { exportBatchMode = false; exportDialogRequested = true; }
+    ImGui::TextWrapped("Choose current scene or batch, outputs and destination.");
     ImGui::End();
 
     ImGui::SetNextWindowPos({size.x - side, top});
     ImGui::SetNextWindowSize({side, size.y - top - bottom});
     ImGui::Begin("Inspector", nullptr, panelFlags);
+    ImGui::SeparatorText("Scene view");
+    const char *viewModes[]={"Scene / edit", "RGB", "Depth", "Segmentation", "Bounding boxes"};
+    ImGui::SetNextItemWidth(-1);
+    if(ImGui::Combo("##sceneView", &previewMode, viewModes, 5)) previewTime=-1;
+    if(previewMode==2) ImGui::TextWrapped("Nearer is brighter. Background is black.");
+    ImGui::Separator();
     inspector();
     ImGui::Separator();
     if (ImGui::CollapsingHeader("Scene lighting"))
@@ -285,6 +295,7 @@ void Application::gui()
     if (ImGui::IsItemHovered())
         ImGui::SetTooltip("%s", status.c_str());
     ImGui::End();
+    if (previewMode != 0) return;
     ImGui::GetBackgroundDrawList()->AddText({viewportLeft + 16, viewportTop + 15},
                                             IM_COL32(190, 190, 190, 255), "OPENGL 3.3 / SCENE VIEW");
     if (renderer.showGrid)

@@ -61,11 +61,11 @@ add_executable(ComputerGraphicsAssignment1 src/main.cpp
     src/core/Application.cpp src/core/Camera.cpp src/core/Renderer.cpp src/core/Shader.cpp
     src/graphics/Mesh.cpp src/graphics/Texture.cpp src/graphics/Grid.cpp src/scene/Scene.cpp
     src/molecule/Molecule.cpp src/gui/GuiLayer.cpp src/gui/FileDialog.cpp src/gui/Editor.cpp
-    src/scene/Bounds.cpp src/scene/SceneIO.cpp src/core/EditorChecks.cpp)
+    src/scene/Bounds.cpp src/scene/SceneIO.cpp src/core/EditorChecks.cpp src/gui/ExportUi.cpp src/scene/Preview.cpp src/scene/DatasetView.cpp src/gui/DatasetUi.cpp)
 target_include_directories(ComputerGraphicsAssignment1 PRIVATE include ${stb_SOURCE_DIR})
 target_link_libraries(ComputerGraphicsAssignment1 PRIVATE geometry glfw glad glm::glm imgui_backend gizmo nlohmann_json::nlohmann_json)
 if(WIN32)
-    target_link_libraries(ComputerGraphicsAssignment1 PRIVATE comdlg32)
+    target_link_libraries(ComputerGraphicsAssignment1 PRIVATE comdlg32 ole32 shell32 uuid)
 endif()
 target_compile_definitions(ComputerGraphicsAssignment1 PRIVATE _CRT_SECURE_NO_WARNINGS NOMINMAX)
 if(MSVC)

@@ -156,6 +156,31 @@ void Application::verifyEditor()
           std::filesystem::exists(batchPath / "sample_000002/depth.npy"),
           "Batch export lost images/categories or depth data.");
     reject([&] { exportBatch(batchPath, variation); });
+    ExportOptions rgbOnly;
+    rgbOnly.depth=rgbOnly.masks=rgbOnly.coco=rgbOnly.yolo=false;
+    rgbOnly.depthPreview=rgbOnly.segmentationPreview=rgbOnly.bboxPreview=false;
+    auto selectedPath=folder/("selected-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+    exportSample(selectedPath,97,73,rgbOnly);
+    check(std::filesystem::exists(selectedPath/"rgb.png") && !std::filesystem::exists(selectedPath/"depth.npy") &&
+          !std::filesystem::exists(selectedPath/"annotations.json") && !std::filesystem::exists(selectedPath/"instance_ids.png"),
+          "Export ignored selected outputs.");
+    nlohmann::json selectedInfo;
+    {std::ifstream f(selectedPath/"sample.json");f>>selectedInfo;}
+    check(selectedInfo["annotations"].is_null() && selectedInfo["depth"]["file"].is_null() &&
+          selectedInfo["instances"][0]["mask"].is_null(),"Manifest references disabled outputs.");
+    ExportOptions depthOnly=rgbOnly;depthOnly.rgb=false;depthOnly.depth=true;
+    int updates=0;
+    exportBatch(selectedPath/"depth-batch",variation,depthOnly,[&](int,int){++updates;});
+    check(updates==variation.count+1 && !std::filesystem::exists(selectedPath/"depth-batch/annotations.json") &&
+          std::filesystem::exists(selectedPath/"depth-batch/sample_000001/depth.npy") &&
+          !std::filesystem::exists(selectedPath/"depth-batch/sample_000001/rgb.png"),"Selective batch/progress failed.");
+    auto empty=rgbOnly;empty.rgb=false;
+    reject([&]{exportSample(selectedPath/"empty",97,73,empty);});
+    auto invalid=depthOnly;invalid.coco=true;
+    reject([&]{exportSample(selectedPath/"invalid",97,73,invalid);});
+    reject([&]{exportBatch(selectedPath/"canceled",variation,rgbOnly,[](int,int){throw std::runtime_error("cancel");});});
+    check(!std::filesystem::exists(selectedPath/"canceled") && camera.yaw==beforeBatchCamera.yaw &&
+          scene.selected==beforeBatchScene.selected,"Canceled export changed scene or exposed incomplete output.");
     std::cout << "BATCH PASS: seed/index, pinned transforms, support height, stable IDs, COCO merge, editor restoration.\n";
     check(restored.scene.objects[20].atoms[2].element == 1, "Edited molecular atom type lost.");
     check(glm::length(restored.scene.objects[20].atoms[1].position - glm::vec3(-2, 1, 0.3f)) < 1e-5f,
@@ -330,6 +355,14 @@ void Application::verifyEditor()
     glDepthRange(0.2, 0.8);
     glClearDepth(0.25);
     auto planeFrame = renderer.captureDataset(depthScene, pickCamera, 321, 241);
+    check(previewPixels(planeFrame,1)==planeFrame.rgb,"RGB preview differs from export capture.");
+    auto depthPixels=previewPixels(planeFrame,2);
+    auto expectedDepth=makeDepthPreview(planeFrame.depth);
+    for(size_t i=0;i<planeFrame.depth.size();++i)
+        check(depthPixels[3*i]==expectedDepth.pixels[i] && depthPixels[3*i+1]==depthPixels[3*i] &&
+              depthPixels[3*i+2]==depthPixels[3*i],"Depth preview differs from exported depth preview.");
+    check(previewPixels(planeFrame,3)!=planeFrame.rgb && previewPixels(planeFrame,4)!=planeFrame.rgb,
+          "Segmentation/bounding box preview did not change pixels.");
     GLdouble restoredRange[2], restoredClear;
     glGetDoublev(GL_DEPTH_RANGE, restoredRange);
     glGetDoublev(GL_DEPTH_CLEAR_VALUE, &restoredClear);
@@ -503,6 +536,53 @@ void Application::verifyEditor()
     camera = savedCamera;
     gizmoMode = 0;
     pendingPick = glm::vec2(-1);
+    // The UI exporter draws additional progress frames after the main frame has ended.
+    auto uiFolder=folder.u8string();
+    check(uiFolder.size()<exportFolder.size(),"Test export path too long.");
+    std::copy(uiFolder.begin(),uiFolder.end(),exportFolder.begin());
+    exportFolder[uiFolder.size()]=0;
+    auto savedBatch=batchSettings;
+    batchSettings=variation;exportBatchMode=true;
+    performExport();
+    check(exportSucceeded && std::filesystem::exists(lastExport/"dataset.json"),
+          "UI export/progress frames failed.");
+    exportPreviewSample=1;exportPreviewDirty=true;
+    ImGui_ImplOpenGL3_NewFrame();ImGui_ImplGlfw_NewFrame();ImGui::NewFrame();
+    ImGui::Begin("Export preview test");exportPreview();ImGui::End();ImGui::Render();
+    check(!exportPreviewDirty && exportPreviewFrame.width==variation.width && exportPreviewFrame.height==variation.height,
+          "Export dialog failed to render its selected batch preview.");
+    SceneDocument previewBase{scene,camera,animation,renderer.background,renderer.lightPosition,renderer.showGrid};
+    auto previewExpected=makeBatchSample(previewBase,variation,1);
+    auto previousLight=renderer.lightPosition,previousBackground=renderer.background;
+    double previousTime=renderer.animationTime;
+    renderer.lightPosition=previewExpected.lightPosition;renderer.background=previewExpected.background;
+    renderer.animationTime=animation.time;
+    auto expectedFrame=renderer.captureDataset(previewExpected.scene,previewExpected.camera,variation.width,variation.height);
+    renderer.lightPosition=previousLight;renderer.background=previousBackground;renderer.animationTime=previousTime;
+    check(expectedFrame.rgb==exportPreviewFrame.rgb && expectedFrame.instanceIds==exportPreviewFrame.instanceIds &&
+          expectedFrame.depth==exportPreviewFrame.depth,"Export preview differs from selected seeded sample.");
+    auto savedSamples = datasetSamples(lastExport);
+    auto savedSample = loadSavedSample(savedSamples.at(1));
+    check(savedSample.frame.rgb == expectedFrame.rgb && savedSample.frame.depth == expectedFrame.depth &&
+          savedSample.frame.instanceIds == expectedFrame.instanceIds,
+          "Dataset viewer changed RGB orientation, instance IDs or float32 depth.");
+    for (int mode = 1; mode <= 4; ++mode)
+        check(savedSample.pixels(mode) == previewPixels(expectedFrame, mode), "Saved dataset view differs from exported frame.");
+    check(std::filesystem::exists(lastExport / "yolo/labels/sample_000002.txt") &&
+          std::filesystem::exists(lastExport / "yolo/images/sample_000002.png"), "Batch YOLO pairs missing.");
+    auto onlyDepth = loadSavedSample(datasetSamples(selectedPath / "depth-batch").front());
+    check(onlyDepth.pixels(1).empty() && !onlyDepth.pixels(2).empty(), "Depth-only dataset viewer failed.");
+    reject([&] {readDepthNpy(savedSamples.at(1).parent_path() / "depth.npy", 1, 1);});
+    auto badDepth = folder / "truncated-depth.npy";
+    {std::ofstream f(badDepth, std::ios::binary); f << "invalid";}
+    reject([&] {readDepthNpy(badDepth, 1, 1);});
+    openDataset(lastExport);
+    ImGui_ImplOpenGL3_NewFrame();ImGui_ImplGlfw_NewFrame();ImGui::NewFrame();
+    datasetUi();ImGui::Render();
+    check(datasetError.empty() && datasetImageAvailable, "Dataset viewer UI failed to load saved batch.");
+    datasetViewerOpen = false;
+    std::cout << "DATASET PASS: saved RGB/IDs/depth round-trip, four viewer modes, selective export, YOLO image-label pairs.\n";
+    batchSettings=savedBatch;exportBatchMode=false;exportResultRequested=false;exportFolder.fill(0);
     status = "Editor checks passed.";
     std::cout << "EDITOR PASS: scene round-trip/errors, X/Y/Z move and rotation mouse drags, focus, "
                  "picking/occlusion/resize, animation pixels.\n";
